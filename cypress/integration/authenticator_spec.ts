@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 export const selectors = {
 	// Auth component classes
 	usernameInput: '[data-test="username-input"]',
