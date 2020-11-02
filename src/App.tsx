@@ -4,6 +4,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { listTodos } from "./graphql/queries";
 
 import CreateTodo from "./components/CreateTodo";
+import TodoList from "./components/TodosList";
 
 import TodoConnection from "./types/TodoConnection";
 import Todo from "./types/Todo";
@@ -34,29 +35,8 @@ const App = () => {
 	return (
 		<div style={styles.container}>
 			<h2>Amplify Todos</h2>
-			{/* <input
-				onChange={(event) => setInput("name", event.target.value)}
-				style={styles.input}
-				value={formState.name}
-				placeholder="Name"
-			/>
-			<input
-				onChange={(event) => setInput("description", event.target.value)}
-				style={styles.input}
-				value={formState.description}
-				placeholder="Description"
-			/>
-			<button style={styles.button} onClick={addTodo}>
-				Create Todo
-			</button> */}
 			<CreateTodo />
-
-			{todos.map((todo, index) => (
-				<div key={todo.id ? todo.id : index} style={styles.todo}>
-					<p style={styles.todoName}>{todo.name}</p>
-					<p style={styles.todoDescription}>{todo.description}</p>
-				</div>
-			))}
+			<TodoList />
 		</div>
 	);
 };
@@ -70,9 +50,6 @@ const styles: { [key: string]: CSSProperties } = {
 		justifyContent: "center",
 		padding: 20,
 	},
-	todo: { marginBottom: 15 },
-	todoName: { fontSize: 20, fontWeight: "bold" },
-	todoDescription: { marginBottom: 0 },
 };
 
 export default App;
