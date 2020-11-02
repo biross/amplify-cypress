@@ -1,8 +1,9 @@
 /* src/App.js */
 import React, { useEffect, useState, CSSProperties } from "react";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createTodo } from "./graphql/mutations";
 import { listTodos } from "./graphql/queries";
+
+import CreateTodo from "./components/CreateTodo";
 
 import TodoConnection from "./types/TodoConnection";
 import Todo from "./types/Todo";
@@ -10,19 +11,12 @@ import Todo from "./types/Todo";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
-const initialState = { name: "", description: "" };
-
 const App = () => {
-	const [formState, setFormState] = useState<Todo>(initialState);
 	const [todos, setTodos] = useState<Todo[]>([]);
 
 	useEffect(() => {
 		fetchTodos();
 	}, []);
-
-	function setInput(key: string, value: string) {
-		setFormState({ ...formState, [key]: value });
-	}
 
 	async function fetchTodos() {
 		try {
@@ -37,22 +31,10 @@ const App = () => {
 		}
 	}
 
-	async function addTodo() {
-		try {
-			if (!formState.name || !formState.description) return;
-			const todo = { ...formState };
-			setTodos([...todos, todo]);
-			setFormState(initialState);
-			await API.graphql(graphqlOperation(createTodo, { input: todo }));
-		} catch (err) {
-			console.log("error creating todo:", err);
-		}
-	}
-
 	return (
 		<div style={styles.container}>
 			<h2>Amplify Todos</h2>
-			<input
+			{/* <input
 				onChange={(event) => setInput("name", event.target.value)}
 				style={styles.input}
 				value={formState.name}
@@ -66,7 +48,9 @@ const App = () => {
 			/>
 			<button style={styles.button} onClick={addTodo}>
 				Create Todo
-			</button>
+			</button> */}
+			<CreateTodo />
+
 			{todos.map((todo, index) => (
 				<div key={todo.id ? todo.id : index} style={styles.todo}>
 					<p style={styles.todoName}>{todo.name}</p>
@@ -87,22 +71,8 @@ const styles: { [key: string]: CSSProperties } = {
 		padding: 20,
 	},
 	todo: { marginBottom: 15 },
-	input: {
-		border: "none",
-		backgroundColor: "#ddd",
-		marginBottom: 10,
-		padding: 8,
-		fontSize: 18,
-	},
 	todoName: { fontSize: 20, fontWeight: "bold" },
 	todoDescription: { marginBottom: 0 },
-	button: {
-		backgroundColor: "black",
-		color: "white",
-		outline: "none",
-		fontSize: 18,
-		padding: "12px 0px",
-	},
 };
 
 export default App;
