@@ -1,6 +1,7 @@
 /* src/App.js */
 import React, { CSSProperties } from "react";
 import Amplify from "aws-amplify";
+import { withAuthenticator } from "aws-amplify-react";
 
 import CreateTodo from "./components/CreateTodo";
 import TodoList from "./components/TodosList";
@@ -41,4 +42,4 @@ const styles: { [key: string]: CSSProperties } = {
 	},
 };
 
-export default App;
+export default withAuthenticator(App, true);
