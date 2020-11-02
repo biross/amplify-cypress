@@ -1,27 +1,23 @@
 import React, { useState, CSSProperties } from "react";
-import { API, graphqlOperation } from "aws-amplify";
-import { createTodo } from "../graphql/mutations";
-
+import TodoStore from "../store/TodoStore";
 import Todo from "../types/Todo";
 
 const initialState = { name: "", description: "" };
 
 const CreateTodo = () => {
 	const [formState, setFormState] = useState<Todo>(initialState);
+	const addTodo = TodoStore((state) => state.addTodo);
 
 	function setInput(key: string, value: string) {
 		setFormState({ ...formState, [key]: value });
 	}
 
-	async function addTodo() {
-		try {
-			if (!formState.name || !formState.description) return;
-			const todo = { ...formState };
-			setFormState(initialState);
-			await API.graphql(graphqlOperation(createTodo, { input: todo }));
-		} catch (err) {
-			console.log("error creating todo:", err);
-		}
+	async function onAddTodo() {
+		if (!formState.name || !formState.description) return;
+		const todo = { ...formState };
+
+		setFormState(initialState);
+		addTodo(todo);
 	}
 
 	return (
@@ -38,7 +34,7 @@ const CreateTodo = () => {
 				value={formState.description}
 				placeholder="Description"
 			/>
-			<button style={styles.button} onClick={addTodo}>
+			<button style={styles.button} onClick={onAddTodo}>
 				Create Todo
 			</button>
 		</div>

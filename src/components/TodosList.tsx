@@ -1,29 +1,15 @@
-import React, { useState, useEffect, CSSProperties } from "react";
-import { API, graphqlOperation } from "aws-amplify";
-import { listTodos } from "../graphql/queries";
-
-import TodoConnection from "../types/TodoConnection";
-import Todo from "../types/Todo";
+import React, { useEffect, CSSProperties } from "react";
+import TodoStore from "../store/TodoStore";
 
 const TodoList = () => {
-	const [todos, setTodos] = useState<Todo[]>([]);
+	const [todos, fetchTodos] = TodoStore((state) => [
+		state.todos,
+		state.fetchTodos,
+	]);
 
 	useEffect(() => {
 		fetchTodos();
 	}, []);
-
-	async function fetchTodos() {
-		try {
-			const todoData = (await API.graphql(
-				graphqlOperation(listTodos)
-			)) as TodoConnection;
-
-			const todos = todoData.data.listTodos.items;
-			setTodos(todos);
-		} catch (err) {
-			console.log("error fetching todos");
-		}
-	}
 
 	return (
 		<div style={styles.container}>
