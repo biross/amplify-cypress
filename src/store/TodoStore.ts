@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 import { listTodos } from "../graphql/queries";
-import { createTodo } from "../graphql/mutations";
+import { createTodo, deleteTodo } from "../graphql/mutations";
 import create, { SetState, GetState } from "zustand";
 
 import Todo from "../types/Todo";
@@ -12,6 +12,7 @@ type TodoStore = {
 	setTodos: (todos: Todo[]) => void;
 	fetchTodos: () => void;
 	addTodo: (todo: Todo) => void;
+	removeTodo: (id: string) => void;
 };
 
 const useTodoStore = create<TodoStore>(
@@ -41,6 +42,16 @@ const useTodoStore = create<TodoStore>(
 				set({ todos: [...todos, newTodo] });
 			} catch (err) {
 				console.log("error creating todo:", err);
+			}
+		},
+		removeTodo: async (id: string) => {
+			try {
+				await API.graphql(graphqlOperation(deleteTodo, { input: { id } }));
+
+				const { todos } = get();
+				set({ todos: todos.filter((todo) => todo.id !== id) });
+			} catch (err) {
+				console.log("error removing todo:", err);
 			}
 		},
 	})

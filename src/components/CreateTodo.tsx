@@ -5,7 +5,7 @@ import Todo from "../types/Todo";
 const initialState = { name: "", description: "" };
 
 const CreateTodo = () => {
-	const [formState, setFormState] = useState<Todo>(initialState);
+	const [formState, setFormState] = useState(initialState);
 	const addTodo = TodoStore((state) => state.addTodo);
 
 	function setInput(key: string, value: string) {
@@ -16,8 +16,8 @@ const CreateTodo = () => {
 		if (!formState.name || !formState.description) return;
 		const todo = { ...formState };
 
+		await addTodo(todo as Todo);
 		setFormState(initialState);
-		addTodo(todo);
 	}
 
 	return (
@@ -60,6 +60,7 @@ const styles: { [key: string]: CSSProperties } = {
 		outline: "none",
 		fontSize: 18,
 		padding: "12px 0px",
+		cursor: "pointer",
 	},
 };
 
