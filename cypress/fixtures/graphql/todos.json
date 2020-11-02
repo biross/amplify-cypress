@@ -1,0 +1,19 @@
+{
+	"data": {
+		"listTodos": {
+			"items": [
+				{
+					"id": "1",
+					"name": "todo 1",
+					"description": "some todo"
+				},
+				{
+					"id": "2",
+					"name": "todo 2",
+					"description": "another todo"
+				}
+			],
+			"nextToken": null
+		}
+	}
+}

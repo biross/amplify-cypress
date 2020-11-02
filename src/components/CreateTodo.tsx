@@ -26,15 +26,21 @@ const CreateTodo = () => {
 				onChange={(event) => setInput("name", event.target.value)}
 				style={styles.input}
 				value={formState.name}
+				data-test="create-todo-name-input"
 				placeholder="Name"
 			/>
 			<input
 				onChange={(event) => setInput("description", event.target.value)}
 				style={styles.input}
 				value={formState.description}
+				data-test="create-todo-description-input"
 				placeholder="Description"
 			/>
-			<button style={styles.button} onClick={onAddTodo}>
+			<button
+				style={styles.button}
+				onClick={onAddTodo}
+				data-test="create-todo-submit-button"
+			>
 				Create Todo
 			</button>
 		</div>
