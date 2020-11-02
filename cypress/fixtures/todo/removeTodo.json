@@ -1,0 +1,9 @@
+{
+	"data": {
+		"removeTodo": {
+			"id": "1",
+			"name": "todo 1",
+			"description": "a todo"
+		}
+	}
+}

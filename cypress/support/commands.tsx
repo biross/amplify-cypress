@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import Amplify, { Auth } from "aws-amplify";
+import awsExports from "../../src/aws-exports";
+
+Amplify.configure(awsExports);
+
+Cypress.Commands.add("login", async () => {
+	try {
+		await Auth.signIn(Cypress.env("username"), Cypress.env("password"));
+	} catch (error) {
+		console.log("error signing in", error);
+	}
+});

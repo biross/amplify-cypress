@@ -1,0 +1,9 @@
+{
+	"data": {
+		"createTodo": {
+			"id": "3",
+			"name": "todo 3",
+			"description": "yet another todo"
+		}
+	}
+}

@@ -18,13 +18,18 @@ const TodoList = () => {
 			{todos.map((todo, index) => (
 				<div key={todo.id ? todo.id : index} style={styles.todo}>
 					<div style={styles.info}>
-						<p style={styles.todoName}>{todo.name}</p>
-						<p style={styles.todoDescription}>{todo.description}</p>
+						<p style={styles.todoName} data-test="todo-name">
+							{todo.name}
+						</p>
+						<p style={styles.todoDescription} data-test="todo-description">
+							{todo.description}
+						</p>
 					</div>
 					<img
 						style={styles.trashcan}
 						src={TrashcanIcon}
 						alt="remove todo"
+						data-test="todo-remove-button"
 						onClick={() => removeTodo(todo.id)}
 					/>
 				</div>

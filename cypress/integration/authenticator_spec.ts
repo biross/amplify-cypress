@@ -10,9 +10,6 @@ export const selectors = {
 };
 
 describe("Authenticator:", function() {
-	const test_username = "test1";
-	const test_password = "password13!";
-
 	// Step 1: setup the application state
 	beforeEach(function() {
 		cy.visit("/");
@@ -20,8 +17,8 @@ describe("Authenticator:", function() {
 
 	it("allows a user to signin and out", () => {
 		// Step 2: Take an action (Sign in)
-		cy.get(selectors.usernameInput).type(test_username);
-		cy.get(selectors.signInPasswordInput).type(test_password);
+		cy.get(selectors.usernameInput).type(Cypress.env("username"));
+		cy.get(selectors.signInPasswordInput).type(Cypress.env("password"));
 		cy.get(selectors.signInSignInButton)
 			.contains("Sign In")
 			.click();
