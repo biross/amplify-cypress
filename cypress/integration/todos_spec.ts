@@ -15,6 +15,12 @@ describe("Todos:", function() {
 			if (req.body.includes("listTodos")) {
 				req.reply({ fixture: "graphql/todos.json" });
 			}
+			if (req.body.includes("createTodo")) {
+				req.reply({ fixture: "graphql/createTodo.json" });
+			}
+			if (req.body.includes("removeTodo")) {
+				req.reply({ fixture: "graphql/removeTodo.json" });
+			}
 		});
 
 		cy.login();
@@ -34,8 +40,8 @@ describe("Todos:", function() {
 	it("allows user to create a new todo", () => {
 		cy.get(selectors.todoName).should("have.length", 2);
 
-		const name = "new todo";
-		const description = "new todo description";
+		const name = "todo 3";
+		const description = "yet another todo";
 		cy.get(selectors.createTodoNameInput).type(name);
 		cy.get(selectors.createTodoDescriptionInput).type(description);
 		cy.get(selectors.createTodoSubmitButton).click();
